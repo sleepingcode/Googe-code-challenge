@@ -1,0 +1,109 @@
+From da2591debfb486c0edcc8b4eb60dad865f01e903 Mon Sep 17 00:00:00 2001
+From: Najma_Hassan <najmahassan11@gmail.com>
+Date: Thu, 1 Jul 2021 12:55:28 +0100
+Subject: [PATCH] Create Patch File
+
+---
+ python/src/video_player.py | 62 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 59 insertions(+), 3 deletions(-)
+
+diff --git a/python/src/video_player.py b/python/src/video_player.py
+index bb79af8..5a816f8 100644
+--- a/python/src/video_player.py
++++ b/python/src/video_player.py
+@@ -2,6 +2,12 @@
+ 
+ from .video_library import VideoLibrary
+ 
++is_playing = False
++is_paused = False
++now_playing = None
++previous_video = None
++Random = True
++
+ 
+ class VideoPlayer:
+     """A class used to represent a Video Player."""
+@@ -15,16 +21,51 @@ class VideoPlayer:
+ 
+     def show_all_videos(self):
+         """Returns all videos."""
++        videos = self._video_library.get_all_videos()
++        print("Here's a list of all available videos:")
++        temp_list = []
++
++        for vid in videos:
++            tags = "["
++            for tag in vid.tags:
++                tags = tags + tag + " "
++            tags = tags + "]"
++
++            if tags != "[]":
++                tags = tags[0 : len(tags) - 2] + "]"
+ 
+-        print("show_all_videos needs implementation")
++            temp_list += [f"{vid.title} ({vid.video_id}) {tags}"]
++
++        sorted_list = sorted(temp_list)
++        for x in sorted_list:
++            print(x)
+ 
+     def play_video(self, video_id):
++        global is_playing
++        global previous_video
++        global now_playing
++        global is_paused
+         """Plays the respective video.
+ 
++
+         Args:
+             video_id: The video_id to be played.
+         """
+-        print("play_video needs implementation")
++        now_playing = self._video_library.get_video(video_id)
++
++        if not now_playing:
++            print(f"Cannot play video: Video does not exist!")
++        else:
++            if is_playing is True:
++                print(f"Stopping video {previous_video}")
++                print(f"Playing video: {now_playing.title}")
++                is_playing = False
++                previous_video = now_playing.title
++            else:
++                print(f"Playing video: {now_playing.title}")
++                is_playing = True
++                is_paused = False
++                previous_video = now_playing.title
+ 
+     def stop_video(self):
+         """Stops the current video."""
+@@ -32,9 +73,24 @@ class VideoPlayer:
+         print("stop_video needs implementation")
+ 
+     def play_random_video(self):
++        global is_playing
++        global is_paused
++        global previous_video
++        global now_playing
+         """Plays a random video from the video library."""
+ 
+-        print("play_random_video needs implementation")
++        now_playing = random.choice(self._video_library.get_all_videos())
++        if is_playing:
++            print(f"Stopping video: {previous_video}")
++            print(f"Playing video: {now_playing.title}")
++            is_playing = True
++            is_paused = False
++
++        else:
++            print(f"Playing video: {now_playing.title}")
++            is_playing = True
++            is_paused = False
++        previous_video = now_playing.title
+ 
+     def pause_video(self):
+         """Pauses the current video."""
+-- 
+2.31.1
+
