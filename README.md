@@ -49,7 +49,7 @@ python3 -m pytest test/part4_test.py
 ```
 
 For more information on pytest commandline options, such as only running a specific test,
-you can read more [here](https://docs.pytest.org/en/6.2.x/usage.html#).
+you can read more [here] (https://docs.pytest.org/en/6.2.x/usage.html#).
 
 ## Running and testing from IntelliJ/PyCharm
 * Mark both the `python/` and `src/` directory as Sources Root
@@ -61,12 +61,12 @@ This will allow your editor to correctly index the project.
 
 To run the Application, create a new "Run/Debug configuration":
 * Run > Edit Configurations > "+" Button > Python
-![intellij_setup](intellij_setup.png)
+![intellij_setup] (intellij_setup.png)
 
 To run the tests, add a pytest configuration as follows:
 * Run > Edit Configurations > "+" Button > Python tests > pytest
 
-![intellij_test_setup](intellij_test_setup.png)
+![intellij_test_setup] (intellij_test_setup.png)
 
 Then you will be able to run and debug the unit tests.
 
